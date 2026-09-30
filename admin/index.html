@@ -1,0 +1,197 @@
+<!doctype html>
+<!--
+  海岸小旅 網站提案示範：民宿後台
+  © 2026 Ninth 九號. All rights reserved. 未經書面授權不得重製、改作或使用。
+-->
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="author" content="Ninth 九號">
+<meta name="copyright" content="© 2026 Ninth 九號. All rights reserved.">
+<title>海岸小旅 民宿後台（示範）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chiron+Sung+HK:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.login{min-height:calc(100vh - 36px);display:grid;place-items:center;padding:24px}
+.login .card{width:min(420px,100%)}
+.login h1{font-family:var(--sung);font-weight:700;font-size:28px;letter-spacing:.12em;margin-bottom:6px}
+.demo-cred{background:var(--mist);border-left:3px solid var(--dawn);padding:10px 14px;font-size:14px;margin:14px 0 18px}
+.app{display:none;min-height:100vh;grid-template-columns:230px 1fr}
+.app.on{display:grid}
+.side{background:var(--pacific-deep);color:#fff;padding:26px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:2px}
+.side .brand{color:#fff;margin:0 12px 26px}
+.side .brand i{color:#9FB9C8}
+.side a.item{color:#C7DAE4;text-decoration:none;padding:10px 14px;border-radius:999px;display:flex;justify-content:space-between;align-items:center;font-size:15px}
+.side a.item:hover{background:rgba(255,255,255,.08);color:#fff}
+.side a.item.on{background:#fff;color:var(--pacific-deep);font-weight:700}
+.badge{background:var(--dawn);color:var(--ink);font-size:12px;font-weight:700;border-radius:999px;padding:0 8px}
+.side .spacer{flex:1}
+.main{padding:32px 40px 90px;min-width:0}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.topbar h1{font-family:var(--sung);font-weight:700;font-size:32px;letter-spacing:.1em}
+.pane{display:none}.pane.on{display:block}
+.pane h2{font-family:var(--sung);font-weight:700;font-size:22px;letter-spacing:.06em}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:4px;padding:20px 22px}
+.stat .k{font-size:14px;color:var(--stone)}
+.stat .v{font-family:var(--latin);font-size:40px;line-height:1.2}
+.stat .v.sm{font-family:var(--sans);font-size:17px;line-height:1.6;margin-top:4px}
+.row-acts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;align-items:center}
+.link-btn{background:none;border:0;color:var(--danger);font-weight:700;cursor:pointer;padding:6px 4px;font-size:14px;white-space:nowrap}
+.link-btn.edit{color:var(--pacific)}
+.saved{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:12px 24px;border-radius:999px;font-weight:700;opacity:0;transition:.25s;z-index:100;pointer-events:none}
+.saved.show{opacity:1;transform:translateX(-50%)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.room-edit{display:grid;grid-template-columns:260px 1fr;gap:24px;background:#fff;border:1px solid var(--line);border-radius:4px;padding:22px;margin-bottom:20px}
+.room-edit .photo{aspect-ratio:4/3}
+.room-edit .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.upload{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-weight:700;font-size:14px;color:var(--pacific);margin-top:10px}
+.upload input{position:absolute;width:1px;height:1px;opacity:0}
+.adm-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line)}
+.adm-table th,.adm-table td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;font-size:15px}
+.adm-table th{background:var(--mist);font-size:13px;color:var(--stone)}
+.adm-table select{border:1px solid var(--line);border-radius:4px;padding:6px 8px;background:#fff}
+.scroll{overflow-x:auto;margin-top:12px}
+.sub{font-size:13px;color:var(--stone)}
+.help{font-size:14px;color:var(--stone);margin-top:4px}
+.cal .d.full{background:#F6E1DB;color:var(--danger);text-decoration:none}
+.cal .d.full small{color:var(--danger)}
+@media (max-width:900px){
+  .app.on{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;padding:12px}
+  .side .brand{width:100%;margin:0 8px 8px}
+  .side .spacer{display:none}
+  .main{padding:22px 16px 90px}
+  .stats,.two,.room-edit{grid-template-columns:1fr}
+  .room-edit .grid3{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="demo-bar" role="note">這是 <strong>示範版後台</strong>：修改只會存在這台裝置的瀏覽器。正式版會連到雲端資料庫，改完所有旅客立刻看到。</div>
+
+<div class="login" id="login">
+  <div class="card">
+    <h1>海岸小旅 後台</h1>
+    <p class="muted">登入後可以改房價、上傳房間照片、設定客滿日期、發布消息、處理訂房。</p>
+    <p class="demo-cred">示範帳號：<b>demo</b>　密碼：<b>1234</b></p>
+    <form class="form" id="login-form">
+      <div class="field"><label for="u">帳號</label><input id="u" autocomplete="username" required></div>
+      <div class="field"><label for="pw">密碼</label><input id="pw" type="password" autocomplete="current-password" required></div>
+      <p class="err" id="login-err"></p>
+      <button class="btn btn-sea" type="submit">登入後台</button>
+    </form>
+  </div>
+</div>
+
+<div class="app" id="app">
+  <aside class="side">
+    <a class="brand" href="#overview"><b>海岸小旅</b><i>admin</i></a>
+    <a class="item" href="#overview" data-p="overview">總覽</a>
+    <a class="item" href="#bookings" data-p="bookings">訂房單 <span class="badge" id="badge"></span></a>
+    <a class="item" href="#calendar" data-p="calendar">房況日曆</a>
+    <a class="item" href="#rooms" data-p="rooms">房型與房價</a>
+    <a class="item" href="#news" data-p="news">最新消息</a>
+    <a class="item" href="#info" data-p="info">民宿資訊</a>
+    <span class="spacer"></span>
+    <a class="item" href="../index.html" target="_blank" rel="noopener">查看網站</a>
+    <a class="item" href="#" id="logout">登出</a>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 id="title">總覽</h1>
+      <button class="btn btn-ghost btn-small" type="button" id="reset">還原示範資料</button>
+    </div>
+
+    <section class="pane" id="p-overview">
+      <div class="stats">
+        <div class="stat"><div class="k">待確認的訂房</div><div class="v" id="ov-pending"></div></div>
+        <div class="stat"><div class="k">今天入住</div><div class="v sm" id="ov-today"></div></div>
+        <div class="stat"><div class="k">接下來 30 天已確認</div><div class="v" id="ov-month"></div></div>
+      </div>
+      <h2 style="margin-top:38px">常用功能</h2>
+      <div class="row-acts">
+        <a class="btn btn-sea" href="#bookings">處理訂房</a>
+        <a class="btn btn-dawn" href="#calendar">設定客滿日期</a>
+        <a class="btn btn-ghost" href="#rooms">改房價、上傳照片</a>
+      </div>
+    </section>
+
+    <section class="pane" id="p-bookings">
+      <p class="help" style="margin-bottom:10px">旅客在網站送出的訂房會出現在這裡。確認空房並收到定金後，把狀態改成「已確認」，那幾晚會自動變成客滿；改成「已取消」會自動釋出。</p>
+      <div class="scroll"><table class="adm-table" id="book-table"></table></div>
+    </section>
+
+    <section class="pane" id="p-calendar">
+      <div class="two">
+        <div class="card" style="margin:0">
+          <div class="row2" style="align-items:end">
+            <div class="field"><label for="cal-room">房間</label><select id="cal-room"></select></div>
+            <p class="help">點日期就能切換「客滿／有空房」。網站上客滿的日子不能被訂。</p>
+          </div>
+          <div class="cal-head" style="margin-top:18px"><b id="cal-month"></b><div class="cal-nav"><button type="button" id="prev" aria-label="上個月">‹</button><button type="button" id="next" aria-label="下個月">›</button></div></div>
+          <div class="cal" id="cal"></div>
+        </div>
+        <div>
+          <h2>這個月客滿的日子</h2>
+          <div class="scroll"><table class="adm-table" id="closed-table"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pane" id="p-rooms">
+      <p class="help" style="margin-bottom:18px">改完按每間房下面的「儲存」。照片會自動壓縮，建議用橫的照片。</p>
+      <div id="room-editor"></div>
+      <button class="btn btn-ghost" type="button" id="add-room">新增房型</button>
+    </section>
+
+    <section class="pane" id="p-news">
+      <div class="two">
+        <div class="card" style="margin:0">
+          <h2 id="nf-title">發布消息</h2>
+          <form class="form" id="news-form" style="margin-top:14px">
+            <input type="hidden" id="nf-id">
+            <div class="field"><label for="nf-t">標題</label><input id="nf-t" placeholder="例如：雙十連假還有兩間空房"></div>
+            <div class="field"><label for="nf-d">日期</label><input id="nf-d" type="date"></div>
+            <div class="field"><label for="nf-b">內容</label><textarea id="nf-b" rows="7" placeholder="空一行就會分段"></textarea></div>
+            <p class="err" id="nf-err"></p>
+            <div class="row-acts" style="margin-top:0"><button class="btn btn-sea" type="submit" id="nf-submit">發布</button><button class="btn btn-ghost" type="button" id="nf-cancel" style="display:none">取消編輯</button></div>
+          </form>
+        </div>
+        <div>
+          <h2>已發布</h2>
+          <div class="scroll"><table class="adm-table" id="news-table"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pane" id="p-info">
+      <div class="card" style="max-width:640px">
+        <form class="form" id="info-form">
+          <div class="field"><label for="i-notice">網站最上方的公告</label><input id="i-notice" maxlength="60" placeholder="留空就不顯示"></div>
+          <div class="row2">
+            <div class="field"><label for="i-ci">入住時間</label><input id="i-ci" type="time"></div>
+            <div class="field"><label for="i-co">退房時間</label><input id="i-co" type="time"></div>
+          </div>
+          <div class="field"><label for="i-lic">民宿登記證編號</label><input id="i-lic"><p class="hint">依《民宿管理辦法》，網路上的住宿廣告要寫出登記證編號，這個欄位請不要留空。</p></div>
+          <p class="err" id="i-err"></p>
+          <button class="btn btn-sea" type="submit">儲存民宿資訊</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="saved" id="saved" role="status"></div>
+
+<script src="../assets/data.js"></script>
+<script src="../assets/site-admin.js"></script>
+<script src="../assets/guard.js"></script>
+</body>
+</html>
