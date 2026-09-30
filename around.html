@@ -1,0 +1,84 @@
+<!doctype html>
+<!--
+  海岸小旅 網站提案示範
+  © 2026 Ninth 九號. All rights reserved.
+  本網站之設計、插畫與程式碼為 Ninth 九號之著作，僅供提案展示，未經書面授權不得重製、改作、公開傳輸或使用。
+-->
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="author" content="Ninth 九號">
+<meta name="copyright" content="© 2026 Ninth 九號. All rights reserved.">
+<title>周邊與交通｜海岸小旅（網站提案示範）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chiron+Sung+HK:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="around.html">
+<header id="site-head"></header>
+<main>
+  <div class="page-head">
+    <div class="wrap">
+      <p class="latin">getting here</p>
+      <h1>周邊與交通</h1>
+      <p>民宿在吉安鄉海岸路上，旁邊就有 7-11。開車、騎車、搭火車都方便。</p>
+    </div>
+  </div>
+  <section class="sec">
+    <div class="wrap book-grid">
+      <div>
+        <h2 class="h2" style="font-size:30px">怎麼來</h2>
+        <div class="doc" style="margin-top:20px">
+          <ul>
+            <li><b>開車</b>：導航輸入「花蓮縣吉安鄉仁和村海岸路 242 號」。民宿有私人停車位，免費。</li>
+            <li><b>搭火車</b>：花蓮火車站開車約 15 分鐘，可以搭計程車或租機車過來。</li>
+            <li><b>搭飛機</b>：花蓮機場到民宿約 9 公里。</li>
+            <li><b>騎腳踏車</b>：歡迎環島的朋友，腳踏車有地方停放。</li>
+          </ul>
+        </div>
+        <h2 class="h2" style="font-size:30px;margin-top:56px">附近可以去哪</h2>
+        <div class="doc" style="margin-top:20px">
+          <table>
+            <thead><tr><th>地點</th><th>開車時間</th><th>適合</th></tr></thead>
+            <tbody>
+              <tr><td>知卡宣森林公園</td><td>約 3 分鐘</td><td>早上散步、帶小孩放電</td></tr>
+              <tr><td>東大門夜市</td><td>約 6 分鐘</td><td>晚餐、宵夜</td></tr>
+              <tr><td>海邊</td><td>約 10 分鐘</td><td>看日出、吹海風</td></tr>
+              <tr><td>花蓮火車站</td><td>約 15 分鐘</td><td>搭車、租車</td></tr>
+              <tr><td>遠雄海洋公園</td><td>約 15 分鐘</td><td>親子一日遊</td></tr>
+            </tbody>
+          </table>
+          <p class="src">時間為參考值，實際依路況而定。</p>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h2>地圖</h2>
+          <iframe title="海岸小旅地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="border:0;width:100%;height:320px;border-radius:4px;background:var(--mist)"
+            src="https://www.google.com/maps?q=%E8%8A%B1%E8%93%AE%E7%B8%A3%E5%90%89%E5%AE%89%E9%84%89%E6%B5%B7%E5%B2%B8%E8%B7%AF242%E8%99%9F&output=embed"></iframe>
+          <p style="margin-top:16px"><a class="btn btn-ghost btn-small" id="map-link" target="_blank" rel="noopener">用 Google 地圖導航</a></p>
+        </div>
+        <div class="card">
+          <h2>聯絡我們</h2>
+          <p class="muted" style="margin-bottom:14px">找不到路，打電話或傳 LINE 給我們。</p>
+          <p style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-line" id="line-btn" target="_blank" rel="noopener">LINE 詢問</a><a class="btn btn-ghost" href="tel:0966580579">0966-580-579</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer id="site-foot"></footer>
+<script src="assets/data.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/guard.js"></script>
+<script>
+(function () {
+  document.getElementById("map-link").href = SHOP.map;
+  var lb = document.getElementById("line-btn"); lb.href = SHOP.line; lb.insertAdjacentHTML("afterbegin", LINE_ICON);
+})();
+</script>
+</body>
+</html>

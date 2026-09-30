@@ -1,0 +1,57 @@
+<!doctype html>
+<!--
+  海岸小旅 網站提案示範
+  © 2026 Ninth 九號. All rights reserved.
+  本網站之設計、插畫與程式碼為 Ninth 九號之著作，僅供提案展示，未經書面授權不得重製、改作、公開傳輸或使用。
+-->
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, noimageindex">
+<meta name="author" content="Ninth 九號">
+<meta name="copyright" content="© 2026 Ninth 九號. All rights reserved.">
+<title>最新消息｜海岸小旅（網站提案示範）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chiron+Sung+HK:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="news.html">
+<header id="site-head"></header>
+<main>
+  <div class="page-head">
+    <div class="wrap">
+      <p class="latin">news</p>
+      <h1><span id="post-title">最新消息</span></h1>
+      <p><span id="post-date"></span></p>
+    </div>
+  </div>
+  <section class="sec">
+    <div class="narrow">
+      <div class="doc" id="post"></div>
+      <p style="margin-top:36px"><a class="btn btn-ghost btn-small" href="news.html">回到最新消息</a></p>
+    </div>
+  </section>
+</main>
+<footer id="site-foot"></footer>
+<script src="assets/data.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/guard.js"></script>
+<script>
+(function () {
+  var id = new URLSearchParams(location.search).get("id");
+  var n = HA.Store.load().news.filter(function (x) { return x.id === id; })[0];
+  if (!n) {
+    document.getElementById("post-title").textContent = "找不到這則消息";
+    document.getElementById("post").innerHTML = '<p>這則消息可能已經被民宿移除。</p>';
+    return;
+  }
+  document.title = n.title + "｜海岸小旅（網站提案示範）";
+  document.getElementById("post-title").textContent = n.title;
+  document.getElementById("post-date").textContent = n.date.replace(/-/g, ".");
+  document.getElementById("post").innerHTML = HA.paras(n.body);
+})();
+</script>
+</body>
+</html>
